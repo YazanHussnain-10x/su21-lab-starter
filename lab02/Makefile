@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-Wall -std=c99
+CFLAGS=-Wall -Werror -std=c99
+VG=valgrind
 
 all: linked_list bit_ops vector
 

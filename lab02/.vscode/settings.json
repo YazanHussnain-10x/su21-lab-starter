@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/yazan/Desktop/su21-lab-starter/lab02",
+            "binaryPath": "/home/yazan/Desktop/su21-lab-starter/lab02/bit_ops",
+            "binaryArgs": []
+        }
+    ]
+}
