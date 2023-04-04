@@ -66,27 +66,35 @@ map:
     # are modified by the callees, even when we know the content inside the functions 
     # we call. this is to enforce the abstraction barrier of calling convention.
 mapLoop:
-    add t1, s0, x0      # load the address of the array of current node into t1
+    # Change addi t1, t1, s0 --> lw t1, 0(s0)
+    lw t1, 0(s0)     # load the address of the array of current node into t1
     lw t2, 4(s0)        # load the size of the node's array into t2
 
-    add t1, t1, t0      # offset the array address by the count
+    # Change --> add slli t3, t0, 2
+    slli t3, t0, 2      # Change --> offset should be (i * 4) not i
+    # Change add t1, t1, t0  --> add t1, t1, t3
+    add t1, t1, t3      # offset the array address by the count
     lw a0, 0(t1)        # load the value at that address into a0
-
+    mv t4, t1           # Change --> store value of t1 before calling function
     jalr s1             # call the function on that value.
-
+    mv t1, t4           # Change --> restore value of t1
     sw a0, 0(t1)        # store the returned value back into the array
     addi t0, t0, 1      # increment the count
     bne t0, t2, mapLoop # repeat if we haven't reached the array size yet
 
-    la a0, 8(s0)        # load the address of the next node into a0
-    lw a1, 0(s1)        # put the address of the function back into a1 to prepare for the recursion
+    # Change la a0, 8(s0)  -->  lw a0, 8(s0)
+    lw a0, 8(s0)        # load the address of the next node into a0
+    # Change lw a1, 0(s1)  --> addi a1, s1, x0
+    add a1, s1, x0        # put the address of the function back into a1 to prepare for the recursion
 
-    jal  map            # recurse
+    jal map            # recurse
 done:
     lw s0, 8(sp)
     lw s1, 4(sp)
     lw ra, 0(sp)
     addi sp, sp, 12
+
+    jr ra           # Change --> Add return instruction
 
 print_newline:
     li a1, '\n'
