@@ -16,14 +16,16 @@
 #We have provided five versions of accumulator. Only one is correct, though all five pass the sanity test above.
 
 accumulatorone:
-	lw s0 0(a0)
+	lw s0 0(a0) #All s registers will have the same value exiting the function that they did
+#entering.
 	beq s0 x0 Endone
 	addi sp sp -8
 	sw s0 0(sp)
 	sw ra 4(sp)
 	addi a0 a0 4
 	jal accumulatorone
-	lw t1 0(sp)
+	lw t1 0(sp)#All s registers will have the same value exiting the function that they did
+#entering.
 	lw ra 4(sp)
 	addi sp sp 8
 	add a0 a0 t1
@@ -75,7 +77,7 @@ accumulatorfour:
 	beq t1 x0 Endfour
 	add t2 t2 t1
 	addi a0 a0 4
-	j accumulatorfour
+	j accumulatorfour#h
 Endfour:
 	mv a0 t2
 	jr ra

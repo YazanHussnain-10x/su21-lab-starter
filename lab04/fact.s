@@ -1,6 +1,6 @@
 .text              
-.globl _start
-_start:
+.globl main
+main:
     la t0, n
     lw a0, 0(t0)
     jal ra, factorial
@@ -36,7 +36,8 @@ base_case:
     jr ra
 
 write_tohost:
-    sw a0, tohost, t5
+    li x1, 1
+    sw x1, tohost, t5
     j write_tohost
 
 .data 
