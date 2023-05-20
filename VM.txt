@@ -1,0 +1,14 @@
+Address Reference String
+00
+80
+40
+20
+C0
+A0
+60
+E0
+00
+40
+
+VM-SIMULATOR
+https://personal.ntu.edu.sg/smitha/ParaCache/Paracache/vm.html
